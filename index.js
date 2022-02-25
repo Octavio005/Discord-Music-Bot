@@ -35,6 +35,8 @@ client.on("message", async message => {
   } else if (message.content.startsWith(`${prefix}stop`)) {
     stop(message, serverQueue);
     return;
+  } else if (message.content.startsWith(`${prefix}help`)){
+    help(message)
   } else {
     message.channel.send("You need to enter a valid command!");
   }
@@ -134,6 +136,13 @@ function play(guild, song) {
     .on("error", error => console.error(error));
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
   serverQueue.textChannel.send(`Start playing: **${song.title}**`);
+}
+
+function help(message) {
+  return message.channel.send(
+    "Bot help: \n.play 'song name/url': Play a song\n.skip: Skip to next song\n" +
+    ".stop: Stop player"
+  );
 }
 
 client.login(token);
